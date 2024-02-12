@@ -1,0 +1,33 @@
+arith:- X is 100+200,
+write('100+200 is '),
+write(X),
+nl,
+
+Y is 500-200,
+write('500-200 is '),
+write(Y),
+nl,
+
+Z is 10 * 30,
+write('10 * 30 is '),
+write(Z),
+nl,
+
+A is 100 / 30,
+write('100 / 30 is '),
+write(A),
+nl,
+
+B is 100 // 30,
+write('100 // 30 is '),
+write(B),
+nl,
+
+C is 2**2,
+write('2 ** 2 is '),
+write(C),
+nl,
+
+D is 100 mod 30,
+write('100 mod 30 is'),
+write(D).
