@@ -1,0 +1,25 @@
+% nqueens(N, Queens) is true if Queens is a solution to the N-Queens problem
+nqueens(N, Queens) :-
+    range(1, N, Rows),
+    permutation(Rows, Queens),
+    safe(Queens).
+
+% range(Start, End, List) generates a list of integers from Start to End
+range(Start, End, List) :-
+    findall(X, between(Start, End, X), List).
+
+% safe(Queens) is true if no two queens threaten each other
+safe([]).
+safe([Q|Qs]) :-
+    safe(Qs, Q, 1),
+    safe(Qs).
+
+% safe(Queens, Queen, Offset) is true if the Queen is safe in the current position
+safe([], _, _).
+safe([Q|Qs], Queen, Offset) :-
+    Queen =\= Q + Offset,
+    Queen =\= Q - Offset,
+    Offset1 is Offset + 1,
+    safe(Qs, Queen, Offset1).
+
+
