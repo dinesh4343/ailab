@@ -1,0 +1,5 @@
+fact(0, 1).
+fact(N, Result):-
+    Next is N - 1,
+    fact(Next, Recursion),
+    Result is N * Recursion.
