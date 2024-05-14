@@ -1,20 +1,37 @@
-sol([]).
+% Define the predicate "safe" to check if a queen placed at Row, Col is safe
+safe(_, _).
+safe(Row, Col) :-
+    \+ member(Col, Row),               % Check if no other queen is in the same column
+    \+ diagonal_attack(Row, Col, 1),   % Check if no other queen is in the same diagonal (right)
+    \+ diagonal_attack(Row, Col, -1).  % Check if no other queen is in the same diagonal (left)
 
-sol([x/y|o]):-
-    sol(o),
-    mem(y,[1,2,3,4,5,6,7,8]),
-    noattack(x/y,o).
+% Define the predicate "diagonal_attack" to check diagonal attacks
+diagonal_attack([], _, _).
+diagonal_attack([Row|Rows], Col, Offset) :-
+    Row =\= Col + Offset,
+    NextOffset is Offset + 1,
+    diagonal_attack(Rows, Col, NextOffset).
 
-noattack(_,[]).
+% Define the predicate "queens" to solve the N-Queens problem
+queens(N, Board) :-
+    length(Board, N),                % Board has N rows
+    place_queens(N, Board).
 
-noattack(_x/y,[x1/y1|o]):-
-    y=\=y1,
-    y1-y=\=x1-x,
-    y1-y=\=x-x1,
-    noattack(x/y,o).
-    
-mem(x,[x|_]).
-mem(x,[_|t]):-
-    mem(x,t).
-    
-template([1/y1,2/y2,3/y3,4/y4,5/y5,6/y6,7/y7,8/y8]).
+% Define the predicate "place_queens" to place N queens on the board
+place_queens(0, []).
+place_queens(N, [Row|Rows]) :-
+    N > 0,
+    N1 is N - 1,
+    place_queens(N1, Rows),
+    member(Row, [1, 2, 3, 4, 5, 6, 7, 8]),    % Placing a queen in each column
+    safe(Rows, Row),
+    not_attacked(Rows, Row),
+    \+ member(Row, Rows).
+
+% Define the predicate "not_attacked" to ensure the queens are not attacked
+not_attacked([], _).
+not_attacked([Row|Rows], Col) :-
+    Row =\= Col + Size,
+    Row =\= Col - Size,
+    Size1 is Size + 1,
+    not_attacked(Rows, Col, Size1).
