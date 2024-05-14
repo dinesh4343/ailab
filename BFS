@@ -20,3 +20,10 @@ extend([Node|Path], NewPaths) :-
             (edge(Node, NewNode),
              \+ member(NewNode, [Node|Path])),
             NewPaths).
+
+
+
+
+OP:
+?- bfs(a, g, Path).
+Path = [g, c, a]
