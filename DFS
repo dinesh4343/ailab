@@ -1,0 +1,26 @@
+% Adjacency relations
+edge(a, b).
+edge(a, c).
+edge(b, d).
+edge(b, e).
+edge(c, f).
+edge(c, g).
+
+% Depth-First Search
+dfs(Start, Goal, Path) :-
+    dfs(Start, Goal, [Start], Path).
+
+dfs(Node, Node, _, [Node]).
+dfs(Start, Goal, Visited, [Start|Path]) :-
+    edge(Start, Next),
+    \+ member(Next, Visited),
+    dfs(Next, Goal, [Next|Visited], Path).
+dfs(Start, Goal, Visited, Path) :-
+    edge(Next, Start),
+    \+ member(Next, Visited),
+    dfs(Next, Goal, [Next|Visited], Path).
+
+
+OP:
+?- dfs(a, g, Path).
+Path = [a, c, g]
